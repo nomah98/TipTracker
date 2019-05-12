@@ -1,40 +1,51 @@
 package model;
 
-import java.util.Calendar;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public interface ITipModel {
 
     /**
      * Add an employee that tips you to the list
-     * @param name
+     * @param name the name of the added employee
      */
-    void addTipper(Person name);
+    void addTipper(String name);
 
     /**
-     * Add the place that the designated tipper is working
-     * @param place
+     * Add a job title to the list of Jobs
+     * @param title the title of the Job worked
      */
-    void addLocation(Location place);
+    void addJob(String title, double wage);
 
     /**
-     * Add a job title at a designated location
-     * @param title
-     * @param place
+     *
+     * @param date when the shift took place
+     * @param shiftName what kind of shift it was
+     * @param shiftLength the length of the shift in hours
+     * @param jobTitle the title of the job worked during the shift
+     * @param shiftTip the Tip from the shift
+     * @param weather the weather during the shift
+     * @param timeOfDay what part of the day the shift occured during
      */
-    void addJob(Job title, Location place);
+     void addShift(String date, String shiftName, int shiftLength, String jobTitle,
+                         Tip shiftTip, String weather, String timeOfDay);
 
     /**
-     * Builds the Calendar to use
-     * @return Calendar
+     *
+     * @return the HashMap<String, Shift> that represnets shifts
      */
-    Calendar makeCalendar();
+    HashMap<String, Shift> getShiftMap();
 
     /**
-     * Adding a tip earned at a specific place from a specific person, of a specific amount
-     * @param place the establishment where tipped
-     * @param title the job working while tipped
-     * @param name
+     *
+     * @return the ArrayList<Job> that represents the list of Jobs
      */
-    void addTip(Location place, Job title, Person name, int amount, Shift time, Date date);
+    ArrayList<Job> getJobList();
+
+    /**
+     *
+     * @return he ArrayList<Job> that represents the list of Persons that tipped
+     */
+    ArrayList<Person> getTippers();
+
 }

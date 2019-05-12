@@ -1,0 +1,8 @@
+Map<String, Shift>
+Shift
+  name
+  length
+  tip
+  Job 
+    Wage
+  

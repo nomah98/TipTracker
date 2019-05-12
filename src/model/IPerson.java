@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Map;
+
 public interface IPerson {
 
     /**
@@ -8,5 +10,11 @@ public interface IPerson {
      * @return Person name
      */
     String getName();
+
+    /**
+     * Returns the map of tipper
+     * @return  Map<String, Integer> of the date as a string to how much they tipped
+     */
+    Map<String, Integer> getTipperMap();
 
 }
