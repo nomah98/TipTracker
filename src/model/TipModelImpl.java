@@ -1,7 +1,10 @@
 package model;
 
+import view.ShiftDisplay;
+
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 
 public class TipModelImpl implements ITipModel {
@@ -35,6 +38,18 @@ public class TipModelImpl implements ITipModel {
   }
 
   @Override
+  public void editShift(String date, String shiftName, int shiftLength, String jobTitle, Tip shiftTip,
+                        String weather, String timeOfDay) {
+    shiftMap.remove(date);
+   addShift(date, shiftName, shiftLength, jobTitle, shiftTip, weather, timeOfDay);
+  }
+
+  @Override
+  public void removeShift(String date) {
+    shiftMap.remove(date);
+  }
+
+  @Override
   public HashMap<String, Shift> getShiftMap() {
     return shiftMap;
   }
@@ -49,7 +64,19 @@ public class TipModelImpl implements ITipModel {
     return tippers;
   }
 
-  public void setJobWage(String jTitle) {
 
+  public void setJobWage(String Title) {
+
+  }
+
+  public ArrayList<ShiftDisplay> setShifts() {
+    ArrayList<ShiftDisplay> shiftDisplayList = new ArrayList<>();
+    for (Map.Entry<String, Shift> entry: shiftMap.entrySet()) {
+      ShiftDisplay sd = new ShiftDisplay(entry.getValue(), entry.getValue().getShiftName(),
+              entry.getValue().shiftLength(), entry.getValue().getShiftJob(), entry.getValue().getShiftTip(),
+              entry.getValue().getWeather(), entry.getValue().getTimeOfDay());
+      shiftDisplayList.add(sd);
+    }
+    return shiftDisplayList;
   }
 }
