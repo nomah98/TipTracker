@@ -22,4 +22,12 @@ public interface MainView {
     JList<String> getTippers();
 
     DefaultListModel<String> getTippersModel();
+
+    String getFilePathInput();
+
+    void setErrorMessage(String message);
+
+    String createView();
+
+    void makeVisible();
 }

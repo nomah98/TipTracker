@@ -29,7 +29,7 @@ public interface ITipModel {
      * @param weather the weather during the shift
      * @param timeOfDay what part of the day the shift occured during
      */
-     void addShift(String date, String shiftName, int shiftLength, String jobTitle,
+     void addShift(String date, String shiftName, double shiftLength, String jobTitle,
                          Tip shiftTip, String weather, String timeOfDay);
 
     /**

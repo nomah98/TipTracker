@@ -43,4 +43,25 @@ public class SwingView extends JFrame implements MainView {
     public DefaultListModel<String> getTippersModel() {
         return null;
     }
+
+    @Override
+    public String getFilePathInput() {
+        return null;
+    }
+
+    @Override
+    public void setErrorMessage(String message) {
+
+    }
+
+    @Override
+    public String createView() {
+        return null;
+    }
+
+    @Override
+    public void makeVisible() {
+        pack();
+        this.setVisible(true);
+    }
 }

@@ -1,5 +1,6 @@
 package model;
 
+import parsing.TipBuilder;
 import view.ShiftDisplay;
 
 import java.util.ArrayList;
@@ -12,7 +13,6 @@ public class TipModelImpl implements ITipModel {
   private ArrayList<Job> jobList = new ArrayList<>();
   private ArrayList<Person> tippers = new ArrayList<>();
 
-  public TipModelImpl() {  }
 
   @Override
   public void addTipper(String name) {
@@ -25,7 +25,7 @@ public class TipModelImpl implements ITipModel {
   }
 
   @Override
-  public void addShift(String date, String shiftName, int shiftLength, String jobTitle, Tip shiftTip,
+  public void addShift(String date, String shiftName, double shiftLength, String jobTitle, Tip shiftTip,
                        String weather, String timeOfDay) {
     for (int i = 0; i < jobList.size(); i++) {
       if (jobList.get(i).getJobTitle().equalsIgnoreCase(jobTitle)) {
@@ -78,5 +78,33 @@ public class TipModelImpl implements ITipModel {
       shiftDisplayList.add(sd);
     }
     return shiftDisplayList;
+  }
+
+  public static final class Builder implements TipBuilder<ITipModel> {
+    private TipModelImpl model = new TipModelImpl();
+
+    @Override
+    public ITipModel build() {
+      return model;
+    }
+
+    @Override
+    public TipBuilder<ITipModel> declareJobs(String jobName, double wage) {
+      model.addJob(jobName, wage);
+      return this;
+    }
+
+    @Override
+    public TipBuilder<ITipModel> declareTippers(String tipperName) {
+      model.addTipper(tipperName);
+      return this;
+    }
+
+    @Override
+    public TipBuilder<ITipModel> declareShift(String date, String shiftName, double shiftLength, String shiftJob,
+                                              Tip shiftTip, String weather, String timeOfDay) {
+      model.addShift(date, shiftName,  shiftLength,  shiftJob, shiftTip,  weather,  timeOfDay );
+      return this;
+    }
   }
 }

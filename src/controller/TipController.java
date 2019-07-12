@@ -2,12 +2,17 @@ package controller;
 
 import model.ITipModel;
 import model.TipModelImpl;
+import parsing.TipBuilder;
+import parsing.TipFileReader;
 import view.MainView;
+import view.ViewImpl;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.io.BufferedReader;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
@@ -55,29 +60,50 @@ public class TipController extends JFrame implements IController {
         this.timer = this.createTimer();
         timer.setInitialDelay(0);*/
 
+     view.makeVisible();
+
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        case "Save file":
-        saveFile();
-        break;
-        case "Load file":
-        loadFile();
-        break;
+        switch (e.getActionCommand()) {
+            case "Save file":
+                saveFile();
+                break;
+            case "Load file":
+                loadFile();
+                break;
+        }
     }
 
     private void saveFile() {
         MainView t = null;
         String fileName;
-    t = new MainView(new TipModelImpl(model));
-    fileName = fileName + ".txt";
-      try {
-              PrintWriter writer = new PrintWriter(fileName);
-              writer.write(t.createView());
-              writer.close();
-              } catch (FileNotFoundException f) {
-              throw new IllegalArgumentException("File path not found");
-              }
-}
+        t = new ViewImpl();
+        fileName = "save" + ".txt";
+        try {
+            PrintWriter writer = new PrintWriter(fileName);
+            writer.write(t.createView());
+            writer.close();
+        } catch (FileNotFoundException f) {
+            throw new IllegalArgumentException("File path not found");
+        }
+    }
+    private void loadFile() {
+        BufferedReader br;
+        String filePathToLoad = view.getFilePathInput();
+        TipBuilder<ITipModel> builder = new TipModelImpl.Builder();
+        ITipModel newModel;
+
+        try {
+            if (filePathToLoad != null) {
+                br = new BufferedReader(new FileReader(filePathToLoad));
+                newModel = TipFileReader.parseFile(br, builder);
+                this.model = newModel;
+                startGUI();
+            }
+        } catch (FileNotFoundException e) {
+            view.setErrorMessage("File path not found. Please re-enter file path");
+        }
+    }
 }
